@@ -77,6 +77,13 @@ function draw() {
     dx = -dx;
   }
 
+  //Verificar si se toco la tecla direeccional derecha
+  if (rightPressed && paddleX < canvas.width - paddleWidth) {
+    paddleX += 7;
+  } else if (leftPressed && paddleX > 0 ) {
+    paddleX -= 7;
+  }
+
   x += dx;
   y += dy;
 }
