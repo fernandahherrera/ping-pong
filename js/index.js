@@ -18,8 +18,17 @@ var paddleX = (canvas.width - paddleWidth) / 2;
 var rightPressed = false;
 var leftPressed = false;
 
+// Bloques
+var brickRowCount = 3;
+var brickColumnCount = 5;
+var brickWidth = 75;
+var brickHeight = 20;
+var brickPadding = 3;
+var brickOffsetTop = 30;
+var brickOffsetLeft = 30;
+
 // Agregar eventos de presionado y soltado de teclas
-document.addEventListener("keydown", keyDownHandler, false);
++document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
 // Esta funcion determina si se presiona una tecla
@@ -49,6 +58,23 @@ function drawPaddle() {
   context.closePath();
 }
 
+function drawBricks() {
+for (var row = 0; row < brickRowCount; row++){
+  for (var column = 0; column < brickColumnCount; column++) {
+    var brickX = (column * (brickWidth + brickPadding)) + brickOffsetLeft;
+    var brickY = (row * (brickHeight + brickPadding)) + brickOffsetTop;
+
+    //Dibujar bloque
+
+    context.beginPath();
+    context.rect(brickX, brickY, brickWidth, brickHeight);
+    context.fillStyle = "#0095DD";
+    context.fill();
+    context.closePath();
+    }
+  }
+}
+
 // Esta funcion dibuja un circulo en la posicion x, y
 function drawBall() {
   context.beginPath();
@@ -60,6 +86,9 @@ function drawBall() {
 
 function draw() {
   context.clearRect(0, 0, canvas.width, canvas.height);
+
+//Se llama a la funcion de dibujar bloques
+  drawBricks();
 
   // Se llama a la funcion de dibujar un circulo
   drawBall();
@@ -77,10 +106,11 @@ function draw() {
   } else if (y + dy > canvas.height - ballRadius) {
     if (x > paddleX && paddleX + paddleWidth){
       dy = -dy;
-    } else {
-      alert("MORISTE WEY!!!");
-      document.location.reload();
     }
+    // else {
+    //   alert("MORISTE WEY!!!");
+    //   document.location.reload();
+    // }
   }
 
   //Verificar si se toco la tecla direeccional derecha
