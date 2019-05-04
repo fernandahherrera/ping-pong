@@ -26,7 +26,7 @@ var brickHeight = 20;
 var brickPadding = 3;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
-
+var score = 0;
 //arreglo
 var bricks = [];
 
@@ -109,16 +109,31 @@ function detectarColision() {
     for (var column = 0; column < brickColumnCount; column++) {
       var bloque = bricks[row][column];
 
-       if (
-          x > bloque.x &&
-          x < bloque.x + brickWidth &&
-          y > bloque.y &&
-          y < bloque.y + brickHeight) {
-            dy = -dy;
-            bloque.status = 0;
+      if (bloque.status ==1) {
+        if (
+           x > bloque.x &&
+           x < bloque.x + brickWidth &&
+           y > bloque.y &&
+           y < bloque.y + brickHeight) {
+             dy = -dy;
+             bloque.status = 0;
+             score++;
+
+             if (score == brickRowCount * brickColumnCount) {
+               alert("suertudo xd");
+               document.location.reload();
+             }
+        }
        }
      }
    }
+}
+
+//Esta funcion dibuja el puntaje
+function drawScore() {
+  context.font = "16px Arial";
+  context.fillStyle = "#0095DD";
+  context.fillText ("puntaje: " + score, 8, 20);
 }
 
 function draw() {
@@ -133,6 +148,10 @@ function draw() {
   // Se llama a la funcion de dibujar la paleta
   drawPaddle();
 
+//Moatrar el puntaje
+  drawScore();
+
+//Detectar el choque
   detectarColision();
 
   // Verificar si llego al limite izquierdo/derecho
